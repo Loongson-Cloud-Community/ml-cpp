@@ -29,13 +29,13 @@
 #include <intrin.h>
 #pragma intrinsic(_BitScanForward)
 #endif
-#ifdef RAPIDJSON_SSE42
-#include <nmmintrin.h>
-#elif defined(RAPIDJSON_SSE2)
-#include <emmintrin.h>
-#elif defined(RAPIDJSON_NEON)
-#include <arm_neon.h>
-#endif
+//#ifdef RAPIDJSON_SSE42
+//#include <nmmintrin.h>
+//#elif defined(RAPIDJSON_SSE2)
+//#include <emmintrin.h>
+//#elif defined(RAPIDJSON_NEON)
+//#include <arm_neon.h>
+//#endif
 
 #ifdef __clang__
 RAPIDJSON_DIAG_PUSH
@@ -570,30 +570,30 @@ inline bool Writer<StringBuffer>::WriteDouble(double d) {
     return true;
 }
 
-#if defined(RAPIDJSON_SSE2) || defined(RAPIDJSON_SSE42)
-template<>
-inline bool Writer<StringBuffer>::ScanWriteUnescapedString(StringStream& is, size_t length) {
-    if (length < 16)
-        return RAPIDJSON_LIKELY(is.Tell() < length);
-
-    if (!RAPIDJSON_LIKELY(is.Tell() < length))
-        return false;
-
-    const char* p = is.src_;
-    const char* end = is.head_ + length;
-    const char* nextAligned = reinterpret_cast<const char*>((reinterpret_cast<size_t>(p) + 15) & static_cast<size_t>(~15));
-    const char* endAligned = reinterpret_cast<const char*>(reinterpret_cast<size_t>(end) & static_cast<size_t>(~15));
-    if (nextAligned > end)
-        return true;
-
-    while (p != nextAligned)
-        if (*p < 0x20 || *p == '\"' || *p == '\\') {
-            is.src_ = p;
-            return RAPIDJSON_LIKELY(is.Tell() < length);
-        }
-        else
-            os_->PutUnsafe(*p++);
-
+//#if defined(RAPIDJSON_SSE2) || defined(RAPIDJSON_SSE42)
+//template<>
+//inline bool Writer<StringBuffer>::ScanWriteUnescapedString(StringStream& is, size_t length) {
+//    if (length < 16)
+//        return RAPIDJSON_LIKELY(is.Tell() < length);
+//
+//    if (!RAPIDJSON_LIKELY(is.Tell() < length))
+//        return false;
+//
+//    const char* p = is.src_;
+//    const char* end = is.head_ + length;
+//    const char* nextAligned = reinterpret_cast<const char*>((reinterpret_cast<size_t>(p) + 15) & static_cast<size_t>(~15));
+//    const char* endAligned = reinterpret_cast<const char*>(reinterpret_cast<size_t>(end) & static_cast<size_t>(~15));
+//    if (nextAligned > end)
+//        return true;
+//
+//    while (p != nextAligned)
+//        if (*p < 0x20 || *p == '\"' || *p == '\\') {
+//            is.src_ = p;
+//            return RAPIDJSON_LIKELY(is.Tell() < length);
+//        }
+//        else
+//            os_->PutUnsafe(*p++);
+/*
     // The rest of string using SIMD
     static const char dquote[16] = { '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"', '\"' };
     static const char bslash[16] = { '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\', '\\' };
@@ -630,8 +630,8 @@ inline bool Writer<StringBuffer>::ScanWriteUnescapedString(StringStream& is, siz
 
     is.src_ = p;
     return RAPIDJSON_LIKELY(is.Tell() < length);
-}
-#elif defined(RAPIDJSON_NEON)
+}*/
+/**#if defined(RAPIDJSON_NEON)
 template<>
 inline bool Writer<StringBuffer>::ScanWriteUnescapedString(StringStream& is, size_t length) {
     if (length < 16)
@@ -700,7 +700,7 @@ inline bool Writer<StringBuffer>::ScanWriteUnescapedString(StringStream& is, siz
     return RAPIDJSON_LIKELY(is.Tell() < length);
 }
 #endif // RAPIDJSON_NEON
-
+**/
 RAPIDJSON_NAMESPACE_END
 
 #if defined(_MSC_VER) || defined(__clang__)

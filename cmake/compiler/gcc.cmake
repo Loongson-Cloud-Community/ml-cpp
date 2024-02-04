@@ -10,11 +10,11 @@
 #
 
 # which compilers to use for C and C++
-if(CROSS_TARGET_PLATFORM  STREQUAL "aarch64-linux-gnu")
+if(CROSS_TARGET_PLATFORM  STREQUAL "loongarch64-linux-gnu")
   set(CMAKE_C_COMPILER   "/usr/local/gcc103/bin/${CROSS_TARGET_PLATFORM}-gcc")
   set(CMAKE_CXX_COMPILER "/usr/local/gcc103/bin/${CROSS_TARGET_PLATFORM}-g++")
 
-  set(CMAKE_SYSTEM_PROCESSOR "aarch64")
+  set(CMAKE_SYSTEM_PROCESSOR "loongarch64")
   set(CMAKE_AR       "/usr/local/gcc103/bin/${CROSS_TARGET_PLATFORM}-ar")
   set(CMAKE_RANLIB   "/usr/local/gcc103/bin/${CROSS_TARGET_PLATFORM}-ranlib")
   set(CMAKE_STRIP    "/usr/local/gcc103/bin/${CROSS_TARGET_PLATFORM}-strip")
@@ -26,14 +26,14 @@ if(CROSS_TARGET_PLATFORM  STREQUAL "aarch64-linux-gnu")
   set(CROSS_FLAGS "--sysroot=${SYSROOT}")
 
 else()
-  set(CMAKE_C_COMPILER   "/usr/local/gcc103/bin/gcc")
-  set(CMAKE_CXX_COMPILER "/usr/local/gcc103/bin/g++")
+  set(CMAKE_C_COMPILER   "/usr/bin/gcc")
+  set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 
-  set(CMAKE_SYSTEM_PROCESSOR "x86_64")
-  set(CMAKE_AR       "/usr/local/gcc103/bin/ar")
-  set(CMAKE_RANLIB   "/usr/local/gcc103/bin/ranlib")
-  set(CMAKE_STRIP    "/usr/local/gcc103/bin/strip")
-  set(CMAKE_LINKER   "/usr/local/gcc103/bin/ld")
+  set(CMAKE_SYSTEM_PROCESSOR "loongarch64")
+  set(CMAKE_AR       "/usr/bin/ar")
+  set(CMAKE_RANLIB   "/usr/bin/ranlib")
+  set(CMAKE_STRIP    "/usr/bin/strip")
+  set(CMAKE_LINKER   "/usr/bin/ld")
 endif()
 
 SET(CMAKE_CXX_ARCHIVE_CREATE "<CMAKE_AR> -ru <TARGET> <OBJECTS>")

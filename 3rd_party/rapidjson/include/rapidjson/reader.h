@@ -30,11 +30,11 @@
 #include <intrin.h>
 #pragma intrinsic(_BitScanForward)
 #endif
-#ifdef RAPIDJSON_SSE42
-#include <nmmintrin.h>
-#elif defined(RAPIDJSON_SSE2)
-#include <emmintrin.h>
-#elif defined(RAPIDJSON_NEON)
+//#ifdef RAPIDJSON_SSE42
+//#include <nmmintrin.h>
+//#elif defined(RAPIDJSON_SSE2)
+//#include <emmintrin.h>
+#ifdef defined(RAPIDJSON_NEON)
 #include <arm_neon.h>
 #endif
 
@@ -278,7 +278,7 @@ inline const char* SkipWhitespace(const char* p, const char* end) {
     return p;
 }
 
-#ifdef RAPIDJSON_SSE42
+/**#ifdef RAPIDJSON_SSE42
 //! Skip whitespace with SSE 4.2 pcmpistrm instruction, testing 16 8-byte characters at once.
 inline const char *SkipWhitespace_SIMD(const char* p) {
     // Fast return for single non-whitespace
@@ -412,8 +412,8 @@ inline const char *SkipWhitespace_SIMD(const char* p, const char* end) {
 
     return SkipWhitespace(p, end);
 }
-
-#elif defined(RAPIDJSON_NEON)
+**/
+/**#ifdef defined(RAPIDJSON_NEON)
 
 //! Skip whitespace with ARM Neon instructions, testing 16 8-byte characters at once.
 inline const char *SkipWhitespace_SIMD(const char* p) {
@@ -499,7 +499,7 @@ inline const char *SkipWhitespace_SIMD(const char* p, const char* end) {
 }
 
 #endif // RAPIDJSON_NEON
-
+**/
 #ifdef RAPIDJSON_SIMD
 //! Template function specialization for InsituStringStream
 template<> inline void SkipWhitespace(InsituStringStream& is) {
@@ -1072,7 +1072,7 @@ private:
             // Do nothing for generic version
     }
 
-#if defined(RAPIDJSON_SSE2) || defined(RAPIDJSON_SSE42)
+/**#if defined(RAPIDJSON_SSE2) || defined(RAPIDJSON_SSE42)
     // StringStream -> StackStream<char>
     static RAPIDJSON_FORCEINLINE void ScanCopyUnescapedString(StringStream& is, StackStream<char>& os) {
         const char* p = is.src_;
@@ -1403,7 +1403,7 @@ private:
         is.src_ = is.dst_ = p;
     }
 #endif // RAPIDJSON_NEON
-
+*/
     template<typename InputStream, typename StackCharacter, bool backup, bool pushOnTake>
     class NumberStream;
 

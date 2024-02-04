@@ -84,8 +84,8 @@ const struct sock_filter FILTER[] = {
 #define __NR_clone3 435
 #endif
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_faccessat, 43, 0),
-#else
-#error Unsupported hardware architecture
+#elif defined(__loongarch64)
+//#error Unsupported hardware architecture
 #endif
 
     // Allowed sys calls for all architectures, jump to return allow on match
@@ -93,7 +93,7 @@ const struct sock_filter FILTER[] = {
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_statx, 41, 0), // for create_directories
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_getrandom, 40, 0), // for unique_path
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_mknodat, 39, 0),
-    BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_newfstatat, 38, 0),
+   // BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_newfstatat, 38, 0),
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_readlinkat, 37, 0),
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_dup3, 36, 0),
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_getpriority, 35, 0), // for nice
@@ -104,7 +104,7 @@ const struct sock_filter FILTER[] = {
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_lseek, 30, 0),
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_clock_gettime, 29, 0),
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_gettimeofday, 28, 0),
-    BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_fstat, 27, 0),
+    //BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_fstat, 27, 0),
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_close, 26, 0),
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_connect, 25, 0),
     BPF_JUMP(BPF_JMP | BPF_JEQ | BPF_K, __NR_clone3, 24, 0),

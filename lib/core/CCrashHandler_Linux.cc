@@ -45,6 +45,8 @@ void crashHandler(int sig, siginfo_t* info, void* context) {
     errorAddress = reinterpret_cast<void*>(uContext->uc_mcontext.arm_pc);
 #elif defined(__aarch64__)
     errorAddress = reinterpret_cast<void*>(uContext->uc_mcontext.pc);
+#elif defined(__loongarch64)
+    errorAddress = reinterpret_cast<void*>(uContext->uc_mcontext.__pc);
 #elif defined(__ppc__) || defined(__powerpc) || defined(__powerpc__) || defined(__POWERPC__)
     errorAddress = reinterpret_cast<void*>(uContext->uc_mcontext.regs->nip);
 #else
